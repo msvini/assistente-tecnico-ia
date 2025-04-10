@@ -29,7 +29,18 @@ Pergunta: {question}
 """
 
 def clean_document_input(text):
-    """Limpa o documento de entrada para remover repetições e conteúdo irrelevante"""
+    """
+    Limpa o texto de entrada realizando as seguintes operações:
+    1. Remove números aleatórios e sequências repetitivas que correspondam ao 
+        padrão de quatro ou mais dígitos (opcionalmente seguidos por 'º') até o 
+        final da linha ou do texto.
+    2. Remove linhas que se repetem mais de duas vezes, permitindo no máximo duas 
+        ocorrências da mesma linha.
+    Args:
+        text (str): O texto de entrada a ser limpo.
+    Returns:
+        str: O texto limpo, com padrões indesejados e repetições excessivas removidos.
+    """
     # Remove números aleatórios e sequências repetitivas
     text = re.sub(r'\d{4,}º?.*?(?=\n|\Z)', '', text, flags=re.DOTALL)
     
@@ -54,7 +65,17 @@ def clean_document_input(text):
     return '\n'.join(unique_lines)
 
 def extract_clean_response(text):
-    """Extrai uma resposta limpa e focada, sem repetições"""
+    """
+    Extrai e limpa uma resposta formatada do texto fornecido.
+    Esta função busca um formato específico de resposta no texto de entrada,
+    remove linhas duplicadas ou redundantes e garante que a resposta seja limpa
+    e concisa. Se nenhuma resposta válida for encontrada ou se a resposta limpa
+    for muito curta, uma mensagem padrão é retornada.
+    Args:
+        text (str): O texto de entrada contendo a resposta a ser extraída.
+    Returns:
+        str: O texto da resposta limpa, ou uma mensagem padrão se nenhuma resposta válida for encontrada.
+    """
     # Procura pela resposta formatada
     match = re.search(r'\*\*Resposta:\*\*\s*(.*?)(?=\*\*|\Z)', text, re.DOTALL)
     
@@ -92,7 +113,15 @@ def extract_clean_response(text):
     return clean_content
 
 def formatar_plano_acao(plano):
-    """Formata o plano de ação para incluir no prompt"""
+    """
+    Formata um plano de ação em uma lista numerada de passos.
+    Args:
+        plano (dict): Um dicionário contendo os passos do plano de ação. 
+                      Deve ter a chave "steps", que é uma lista de dicionários, 
+                      onde cada dicionário possui a chave "step_description"  com a descrição do passo.
+    Returns:
+        str: Uma string contendo os passos formatados como uma lista numerada, com cada passo em uma nova linha.
+    """
     passos_formatados = []
     
     for idx, passo in enumerate(plano["steps"]):
