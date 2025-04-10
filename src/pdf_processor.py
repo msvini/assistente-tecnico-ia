@@ -3,7 +3,26 @@ import re
 import io
 
 def extrair_texto_pdf(arquivo_pdf_bytes):
-    """Extrai e limpa texto de PDFs com tratamento avançado"""
+    """
+    Extrai o texto de um arquivo PDF fornecido como bytes.
+
+    Este método processa o conteúdo de um arquivo PDF em formato de bytes,
+    extraindo o texto de cada página e realizando uma limpeza básica no texto.
+
+    Args:
+        arquivo_pdf_bytes (bytes): O conteúdo do arquivo PDF em formato de bytes.
+
+    Returns:
+        str: O texto extraído do PDF, com cada página separada por uma nova linha.
+
+    Raises:
+        ValueError: Se ocorrer um erro durante a leitura ou processamento do PDF.
+
+    Observações:
+        - Remove tags HTML do texto extraído.
+        - Substitui múltiplos espaços consecutivos por um único espaço.
+        - Garante que o texto extraído de cada página seja separado por uma nova linha.
+    """
     try:
         texto = ""
         with io.BytesIO(arquivo_pdf_bytes) as arquivo_pdf:
@@ -19,7 +38,18 @@ def extrair_texto_pdf(arquivo_pdf_bytes):
         raise ValueError(f"Erro na leitura do PDF: {str(e)}")
 
 def processar_documentos(pdfs):
-    """Processa múltiplos PDFs garantindo integridade do conteúdo"""
+    """
+    Processa um dicionário de documentos PDF, extraindo o texto e limitando o tamanho
+    total do conteúdo para caber em um contexto especificado.
+    Args:
+        pdfs (dict): Um dicionário onde as chaves são os nomes dos documentos (str)
+                     e os valores são os conteúdos dos PDFs em formato de bytes.
+    Returns:
+        dict: Um dicionário onde as chaves são os nomes dos documentos (str) e os
+              valores são os textos extraídos e processados (str).
+    Raises:
+        TypeError: Se o conteúdo de algum documento não for do tipo bytes.
+    """
     documentos = {}
     for nome, conteudo in pdfs.items():
         if not isinstance(conteudo, bytes):
