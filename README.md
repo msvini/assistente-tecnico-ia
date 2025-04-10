@@ -144,8 +144,7 @@ Desenvolver um assistente virtual para análise técnica de documentos PDF, capa
         - Alucinações frequentes: Geração de informações não presentes nos documentos, especialmente em consultas ambíguas.
 
         - Respostas inconsistentes: Variações na qualidade das respostas dependendo da complexidade sintática da pergunta.
-   - Inviabilidade de Fine-Tuning:
-	- A arquitetura quantizada não permite ajustes pontuais sem reconversão total do modelo, limitando adaptações a domínios específicos.
+   - Inviabilidade de Fine-Tuning: A arquitetura quantizada não permite ajustes pontuais sem reconversão total do modelo, limitando adaptações a domínios específicos.
 
 - **Janela de Contexto**  
   - Máximo de 2048 tokens (cerca de 5 páginas de texto)  
