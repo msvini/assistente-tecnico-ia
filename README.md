@@ -137,9 +137,15 @@ Desenvolver um assistente virtual para análise técnica de documentos PDF, capa
 
 ### Limitações Atuais
 
-- **Modelo Quantizado**  
-  - Precisão reduzida comparada a versões não quantizadas (ex: diferença de 8-12% vs. Llama2-7B)  
-  - Limitação técnica: não suporta fine-tuning sem reconversão completa  
+- **Precisão Reduzida**  
+  - Precisão Reduzida:
+  	- A versão 4-bit do TinyLlama-1.1B apresenta limitações inerentes à quantização, com margem de erro 8-12% superior a modelos não quantizados (ex: Llama2-7B em 16-bit). Isso se manifesta em:
+
+        - Alucinações frequentes: Geração de informações não presentes nos documentos, especialmente em consultas ambíguas.
+
+        - Respostas inconsistentes: Variações na qualidade das respostas dependendo da complexidade sintática da pergunta.
+   - Inviabilidade de Fine-Tuning:
+	- A arquitetura quantizada não permite ajustes pontuais sem reconversão total do modelo, limitando adaptações a domínios específicos.
 
 - **Janela de Contexto**  
   - Máximo de 2048 tokens (cerca de 5 páginas de texto)  
