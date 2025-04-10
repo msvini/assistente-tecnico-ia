@@ -1,6 +1,22 @@
 from ctransformers import AutoModelForCausalLM
 
 def carregar_modelo():
+    """
+    Carrega o modelo TinyLlama-1.1B no formato GGUF e retorna uma função de predição configurada.
+    O modelo é baixado do Hugging Face Hub e configurado para realizar inferências com parâmetros
+    ajustáveis, como temperatura, número máximo de tokens gerados e tokens de parada.
+    Returns:
+        function: Uma função `predict` que realiza inferências no modelo carregado.
+        A função `predict` aceita os seguintes parâmetros:
+            - prompt (str): O texto de entrada para o modelo.
+            - temperatur    e (float, opcional): Controla a aleatoriedade da geração. Valores mais baixos
+              resultam em saídas mais determinísticas. Padrão é 0.1.
+            - max_new_tokens (int, opcional): Número máximo de novos tokens a serem gerados. Padrão é 500.
+            - stop (list, opcional): Lista de tokens de parada para truncar a geração. Padrão inclui
+              ["Documentos disponíveis:", "Pergunta:", "Usuário:"].
+        Retorna:
+            str: O texto gerado pelo modelo, truncado nos tokens de parada, se aplicável.
+    """
     # Baixe o modelo TinyLlama-1.1B (formato GGUF) do Hugging Face Hub
     model = AutoModelForCausalLM.from_pretrained(
         "TheBloke/TinyLlama-1.1B-1T-OpenOrca-GGUF",
