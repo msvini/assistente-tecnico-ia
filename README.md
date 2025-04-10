@@ -139,7 +139,7 @@ Desenvolver um assistente virtual para análise técnica de documentos PDF, capa
 
 - **Precisão Reduzida**  
   - Precisão Reduzida:
-  	- A versão 4-bit do TinyLlama-1.1B apresenta limitações inerentes à quantização, com margem de erro 8-12% superior a modelos não quantizados (ex: Llama2-7B em 16-bit). Isso se manifesta em:
+  	- A versão do TinyLlama-1.1B apresenta limitações inerentes à quantização, com margem de erro 8-12% superior a modelos não quantizados (ex: Llama2-7B em 16-bit). Isso se manifesta em:
 
         - Alucinações frequentes: Geração de informações não presentes nos documentos, especialmente em consultas ambíguas.
 
