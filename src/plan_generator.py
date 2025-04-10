@@ -1,7 +1,17 @@
 def gerar_plano_acao(pergunta, contexto, modelo):
     """
-    Função simplificada que retorna um plano de ação para responder à pergunta
-    O plano é gerado pelo modelo com base na pergunta
+    Gera um plano de ação estruturado para responder a uma pergunta técnica com base em documentos fornecidos.
+    Args:
+        pergunta (str): A pergunta técnica que precisa ser respondida.
+        contexto (str): O contexto ou informações adicionais relevantes para a pergunta.
+        modelo (callable): Uma função ou modelo que gera respostas baseadas em prompts fornecidos.
+    Returns:
+        dict: Um dicionário contendo os passos do plano de ação no formato:
+            {
+                "steps": [
+                    {"step_description": "Descrição do passo 1"},
+                    {"step_description": "Descrição do passo 2"},
+                    ...
     """
     prompt = """
     Crie um plano simples para responder a seguinte pergunta técnica com base nos documentos carregados.
