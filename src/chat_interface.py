@@ -1,6 +1,7 @@
 import streamlit as st
 from model_handler import carregar_modelo
 from pdf_processor import processar_documentos
+from plan_generator import gerar_plano_acao
 import re
 
 final_prompt_template = """
@@ -17,6 +18,9 @@ REGRAS RIGOROSAS:
 
 FORMATO DA RESPOSTA:
 **Resposta:** [Lista concisa de pontos-chave APENAS do documento, com citações explícitas]
+
+Plano de ação para esta pergunta:
+{plano}
 
 Documentos disponíveis:
 {docs}
@@ -87,6 +91,15 @@ def extract_clean_response(text):
     
     return clean_content
 
+def formatar_plano_acao(plano):
+    """Formata o plano de ação para incluir no prompt"""
+    passos_formatados = []
+    
+    for idx, passo in enumerate(plano["steps"]):
+        passos_formatados.append(f"{idx+1}. {passo['step_description']}")
+    
+    return "\n".join(passos_formatados)
+
 def main():
     st.title("Assistente Técnico de IA")
     modelo = carregar_modelo()
@@ -142,11 +155,16 @@ def main():
                     conteudo_limpo = clean_document_input(conteudo)
                     documentos_formatados += f"Documento: {nome}\n{conteudo_limpo}\n\n"
                 
+                # Gerar plano de ação
+                plano = gerar_plano_acao(pergunta, documentos_formatados, modelo)
+                plano_formatado = formatar_plano_acao(plano)
+                
                 # Gerar resposta
                 resposta_bruta = modelo(
                     final_prompt_template.format(
                         question=pergunta,
-                        docs=documentos_formatados
+                        docs=documentos_formatados,
+                        plano=plano_formatado
                     ),
                     temperature=0.1,
                     max_new_tokens=1000,
